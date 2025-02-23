@@ -1,128 +1,152 @@
-# End-to-end-Medical-Chatbot-using-Llama2
+# End-to-End Medical Chatbot using Llama2
 
-# How to run?
-### STEPS:
+## How to Run
 
-Clone the repository
+### Step 1: Clone the Repository
 
-```bash
-Project repo: https://github.com/
+Clone the project repository from GitHub:
+```sh
+https://github.com/bittush8789/End-to-end-Medical-Chatbot-using-Llama2-.git
 ```
 
-### STEP 01- Create a conda environment after opening the repository
+### Step 2: Create a Conda Environment
 
-```bash
+After opening the repository, create and activate a Conda environment:
+```sh
 conda create -n mchatbot python=3.8 -y
-```
-
-```bash
 conda activate mchatbot
 ```
 
-### STEP 02- install the requirements
-```bash
+### Step 3: Install Dependencies
+
+Install the required dependencies:
+```sh
 pip install -r requirements.txt
 ```
 
+### Step 4: Set Up Environment Variables
 
-### Create a `.env` file in the root directory and add your Pinecone credentials as follows:
-
-```ini
+Create a `.env` file in the root directory and add your Pinecone credentials:
+```sh
 PINECONE_API_KEY = "xxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
 PINECONE_API_ENV = "xxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
 ```
 
+### Step 5: Download the Quantized Llama 2 Model
 
-### Download the quantize model from the link provided in model folder & keep the model in the model directory:
+Download the Llama 2 model and place it in the `model` directory.
 
-```ini
-## Download the Llama 2 Model:
-
+#### Model File:
+```
 llama-2-7b-chat.ggmlv3.q4_0.bin
-
-
-## From the following link:
-https://huggingface.co/TheBloke/Llama-2-7B-Chat-GGML/tree/main
 ```
 
-```bash
-# run the following command
+#### Download Link:
+[Download from Hugging Face](https://huggingface.co/TheBloke/Llama-2-7B-Chat-GGML/tree/main)
+
+### Step 6: Store Index
+
+Run the following command to store the index:
+```sh
 python store_index.py
 ```
 
-```bash
-# Finally run the following command
+### Step 7: Start the Application
+
+Run the application with:
+```sh
 python app.py
 ```
 
-Now,
-```bash
-open up localhost:
+### Step 8: Open the Localhost
+
+Once the application is running, open your browser and navigate to:
+```
+http://localhost:5000
 ```
 
+---
 
-### Techstack Used:
+## Tech Stack Used
 
 - Python
 - LangChain
 - Flask
 - Meta Llama2
 - Pinecone
+- AWS (CI/CD Deployment with GitHub Actions)
 
+---
 
-AWS-CICD-Deployment-with-Github-Actions
-1. Login to AWS console.
-2. Create IAM user for deployment
-#with specific access
+## Deployment on AWS
 
-1. EC2 access : It is virtual machine
+### Step 1: Login to AWS Console
 
-2. ECR: Elastic Container registry to save your docker image in aws
+### Step 2: Create IAM User for Deployment
 
+Grant the following AWS permissions:
+- **EC2 Access**: Virtual Machine for deployment
+- **ECR Access**: Store Docker images
 
-#Description: About the deployment
+### Step 3: Create ECR Repository
 
-1. Build docker image of the source code
+Store and save your Docker image in AWS Elastic Container Registry (ECR):
+```sh
+970547337635.dkr.ecr.ap-south-1.amazonaws.com/medicalchatbot
+```
 
-2. Push your docker image to ECR
+### Step 4: Create EC2 Machine (Ubuntu)
 
-3. Launch Your EC2 
-
-4. Pull Your image from ECR in EC2
-
-5. Lauch your docker image in EC2
-
-#Policy:
-
-1. AmazonEC2ContainerRegistryFullAccess
-
-2. AmazonEC2FullAccess
-3. Create ECR repo to store/save docker image
-- Save the URI: 970547337635.dkr.ecr.ap-south-1.amazonaws.com/medicalchatbot
-4. Create EC2 machine (Ubuntu)
-5. Open EC2 and Install docker in EC2 Machine:
-#optinal
-
+Launch an EC2 instance and install Docker:
+```sh
 sudo apt-get update -y
-
 sudo apt-get upgrade
-
-#required
-
 curl -fsSL https://get.docker.com -o get-docker.sh
-
 sudo sh get-docker.sh
-
 sudo usermod -aG docker ubuntu
-
 newgrp docker
-6. Configure EC2 as self-hosted runner:
-setting>actions>runner>new self hosted runner> choose os> then run command one by one
+```
 
-7. Setup github secrets:
+### Step 5: Configure EC2 as a Self-Hosted Runner
+
+Go to GitHub:
+1. Navigate to **Settings > Actions > Runner**
+2. Click **New Self-Hosted Runner**
+3. Choose **OS** and run the provided commands one by one
+
+### Step 6: Set Up GitHub Secrets
+
+In GitHub **Repository Settings**, add the following secrets:
+```sh
 AWS_ACCESS_KEY_ID
 AWS_SECRET_ACCESS_KEY
 AWS_DEFAULT_REGION
 ECR_REPO
 PINECONE_API_KEY
 OPENAI_API_KEY
+```
+
+---
+
+## AWS Deployment Steps
+
+1. **Build the Docker Image**
+2. **Push the Docker Image to ECR**
+3. **Launch an EC2 Instance**
+4. **Pull the Docker Image from ECR in EC2**
+5. **Launch the Docker Container in EC2**
+
+### AWS IAM Policies Required
+
+Assign the following policies to the IAM user:
+```sh
+AmazonEC2ContainerRegistryFullAccess
+AmazonEC2FullAccess
+```
+
+---
+
+## Conclusion
+
+This guide provides all necessary steps to set up, run, and deploy the End-to-End Medical Chatbot using Llama2 on AWS. Follow the steps carefully to ensure a successful deployment.
+
